@@ -76,9 +76,6 @@ async function makeMyMessageChill(originalMessage) {
     }
 }
 
-// --- Let's Test It Out! So Exciting! ---
-
-// This part makes it work from the command line!
 const originalText = process.argv[2];
 
 if (!originalText) {
