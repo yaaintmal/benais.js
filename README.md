@@ -76,6 +76,8 @@ Want to use **benais.js** super quick from your command line? Easy peasy!
 
   Save the code: Save the JavaScript code above into a file, for example, benais.js.
 
+  Copy the .env.example to .env and adjust it to your local environment
+
   Open your terminal/command prompt: Navigate to the folder where you saved benais.js.
 
   Type this command:
