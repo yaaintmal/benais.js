@@ -82,7 +82,7 @@ Want to use **benais.js** super quick from your command line? Easy peasy!
 
     node benais.js "Your grumpy message here!"
 
-  (Replace "Your grumpy message here!" with whatever you want Benais.js to chill out!)
+  (Replace "Your grumpy message here!" with whatever you want **benais.js** to chill out!)
 
 Example:
 ```node benais.js "You are stupid as fuck!"```
