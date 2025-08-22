@@ -4,15 +4,15 @@ Hey there, future communication wizard! Ever hit send on a message and then inst
 
 ## ✨ Super Cool Features
 
-* **Grumpy-o-Meter (Rudeness Detection):** Benais.js has a superpower! It can tell if your message sounds a bit like it just woke up on the wrong side of the bed. It's like having a little friendly radar for harsh words!
+* **Grumpy-o-Meter (Rudeness Detection):** **benais.js** has a superpower! It can tell if your message sounds a bit like it just woke up on the wrong side of the bed. It's like having a little friendly radar for harsh words! (actually it can't right now, but you'll see where this is getting at...)
 
-* **Instant Nice-ification (Polite Rephrasing):** If the Grumpy-o-Meter goes off, poof! Benais.js swoops in and suggests a kinder, gentler, and more diplomatic way to say what you mean. No more accidental sour notes!
+* **Instant Nice-ification (Polite Rephrasing):** If the Grumpy-o-Meter goes off, poof! **benais.js** swoops in and suggests a kinder, gentler, and more diplomatic way to say what you mean. No more accidental sour notes!
 
-* **Your Own Brainy Sidekick (Local LLM Integration):** The best part? Benais.js uses a super-duper smart language model that lives right on *your* computer. That means your messages stay private, and you're the boss of how it learns and helps!
+* **Your Own Brainy Sidekick (Local LLM Integration):** The best part? **benais.js** uses a super-duper smart language model that lives right on *your* computer. That means your messages stay private, and you're the boss of how it learns and helps!
 
 ## 🚀 How **benais.js** Does Its Thing
 
-Imagine you're sending a message. You give it to Benais.js, and it hands it over to your super-smart **Ollama LLM** chilling on your computer. This model reads your message and thinks, "Hmm, is this giving off sunshine or storm clouds?" If it senses a storm brewing (aka, your message sounds a bit negative), it quickly drafts up a new, brighter, and friendlier version. Then, Benais.js hands that shiny new message back to you! Easy peasy, lemon squeezy!
+Imagine you're sending a message. You give it to **benais.js**, and it hands it over to your super-smart **Ollama LLM** chilling on your computer. This model reads your message and thinks, "Hmm, is this giving off sunshine or storm clouds?" If it senses a storm brewing (aka, your message sounds a bit negative), it quickly drafts up a new, brighter, and friendlier version. Then, Benais.js hands that shiny new message back to you! Easy peasy, lemon squeezy!
 
 ## 💻 Get Your Chill On With **benais.js**!
 
