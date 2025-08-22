@@ -59,35 +59,13 @@ async function makeMyMessageChill(originalMessage) {
                 stream: false, // We want the whole nice message at once!
             }),
         });
+[...]
 
-        if (!response.ok) {
-            // Uh oh, something went wrong with the LLM party!
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
 
-        const data = await response.json();
-        // The LLM's response might have extra chat, so we clean it up!
-        const aiResponse = data.message.content;
-        return aiResponse.replace(/Input: ".+?" ->\s*/, "").trim();
-
-    } catch (error) {
-        console.error("Oopsie! benais.js stubbed its toe trying to make your message chill:", error);
-        return originalMessage; // We'll just stick with your original message if things go sideways.
-    }
-}
+// getting args from the CLI right here, expecting String /tbd
 
 const originalText = process.argv[2];
-
-if (!originalText) {
-    console.error("Oops! You forgot to tell benais.js what to make chill. Try again like this: node YOUR_FILE_NAME.js 'your grumpy message'");
-    process.exit(1);
-}
-
-(async () => {
-    const refined = await makeMyMessageChill(originalText);
-    console.log("Your original message:", originalText);
-    console.log("benais.js refined:", refined);
-})();
+[...]
 ```
 
 Just a Heads Up! Remember to update the ollamaUrl and llmModel in the code snippet to match your specific Ollama setup. You got this!
