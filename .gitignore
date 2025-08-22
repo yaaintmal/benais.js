@@ -1,0 +1,27 @@
+# Node.js
+node_modules/
+dist/
+
+# Build outputs
+build/
+
+# Logs and cache
+logs/
+cache/
+
+# Temporary files
+*.tmp
+*.log
+
+# Specific files or directories to ignore
+.DS_Store
+.env
+.env.example
+.gitignore
+npm-debug.log*
+yarn-error.log*
+
+# Ignore specific file types
+*.log
+*.tmp
+.idea
