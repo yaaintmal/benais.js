@@ -135,10 +135,18 @@ async function transformText(originalText, ...keywords) {
   }
 }
 
-// Usage
-// $node mal_bnais.js originalText
+// updated on 2025-08-22: Added support for function call from cli
+// Usage:
+// $node mal_bnais.js inputargument (aka insult or inputText)
 // inputted insult as String which will be transformed
 
-const originalText = "delete yourself!";
+// Get the input text from the command-line argument
+const originalText = process.argv[2];
+
+if (!originalText) {
+  console.error("Please provide input text as a command-line argument.");
+  process.exit(1);
+}
+
 const transformedText = await transformText(originalText);
 console.log(transformedText);
