@@ -44,7 +44,7 @@ async function makeMyMessageChill(originalMessage) {
     Transformed sentence:`;
 
     try {
-        // Benais.js sends your message to your local LLM!
+        // benais.js sends your message to your local LLM!
         const response = await fetch(ollamaUrl, {
             method: "POST",
             headers: {
@@ -71,7 +71,7 @@ async function makeMyMessageChill(originalMessage) {
         return aiResponse.replace(/Input: ".+?" ->\s*/, "").trim();
 
     } catch (error) {
-        console.error("Oopsie! Benais.js stubbed its toe trying to make your message chill:", error);
+        console.error("Oopsie! benais.js stubbed its toe trying to make your message chill:", error);
         return originalMessage; // We'll just stick with your original message if things go sideways.
     }
 }
@@ -79,14 +79,14 @@ async function makeMyMessageChill(originalMessage) {
 const originalText = process.argv[2];
 
 if (!originalText) {
-    console.error("Oops! You forgot to tell Benais.js what to make chill. Try again like this: node YOUR_FILE_NAME.js 'your grumpy message'");
+    console.error("Oops! You forgot to tell benais.js what to make chill. Try again like this: node YOUR_FILE_NAME.js 'your grumpy message'");
     process.exit(1);
 }
 
 (async () => {
     const refined = await makeMyMessageChill(originalText);
     console.log("Your original message:", originalText);
-    console.log("Benais.js refined:", refined);
+    console.log("benais.js refined:", refined);
 })();
 ```
 
