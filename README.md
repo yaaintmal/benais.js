@@ -1,6 +1,6 @@
 # 🗣️ **benais.js** - Your Message's Chill Filter (Beta)
 
-Hey there, future communication wizard! Ever hit send on a message and then instantly thought, "Oops, maybe I could've said that a *little* nicer?" Well, say hello to **Benais.js**! This cool, tiny JavaScript snippet is like your message's personal chill pill. It sniffs out if your words are giving off grumpy vibes and then helps you whip 'em into a super polite, helpful, and all-around awesome message. All this magic happens with a super smart brain called a Local Large Language Model (LLM) right on your computer!
+Hey there, future communication wizard! Ever hit send on a message and then instantly thought, "Oops, maybe I could've said that a *little* nicer?" Well, say hello to **benais.js**! This cool, tiny JavaScript snippet is like your message's personal chill pill. It sniffs out if your words are giving off grumpy vibes and then helps you whip 'em into a super polite, helpful, and all-around awesome message. All this magic happens with a super smart brain called a Local Large Language Model (LLM) right on your computer!
 
 ## ✨ Super Cool Features
 
