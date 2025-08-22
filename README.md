@@ -95,6 +95,14 @@ async function makeMyMessageChill(originalMessage) {
 
 Just a Heads Up! Remember to update the ollamaUrl and llmModel in the code snippet to match your specific Ollama setup. You got this!
 
+#🔮 Future Features (Super Cool Ideas!)
+
+* **Webpage Comment Filter:** Imagine using **benais.js** right on your website to automatically filter public comments and keep things friendly and positive for everyone!
+
+* **Child-Safe Mode:** We could add an "opt-in" feature to make **benais.js** extra super careful, ensuring messages are always appropriate for younger users. Keeping the internet a safe space!
+
 🤝 Help **benais.js** Get Even Cooler!
 
 **benais.js** is still in its Beta phase, which means it's like a super fun work-in-progress! Your awesome ideas and help are priceless. Feel free to copy this code, brainstorm new features, or even send in your own tweaks and improvements. Let's make Benais.js the ultimate chill filter for everyone!
+
+
