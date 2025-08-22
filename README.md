@@ -14,7 +14,7 @@ Hey there, future communication wizard! Ever hit send on a message and then inst
 
 Imagine you're sending a message. You give it to Benais.js, and it hands it over to your super-smart **Ollama LLM** chilling on your computer. This model reads your message and thinks, "Hmm, is this giving off sunshine or storm clouds?" If it senses a storm brewing (aka, your message sounds a bit negative), it quickly drafts up a new, brighter, and friendlier version. Then, Benais.js hands that shiny new message back to you! Easy peasy, lemon squeezy!
 
-## 💻 Get Your Chill On With Benais.js!
+## 💻 Get Your Chill On With **benais.js**!
 
 Wanna get **benais.js** making your messages sparkle? You'll need just two things:
 
@@ -23,7 +23,7 @@ Wanna get **benais.js** making your messages sparkle? You'll need just two thing
 2.  **Toss **benais.js** into Your Project:** Just copy and paste this little JavaScript snippet into your code, and let the magic begin!
 
 ```javascript
-// This is your Benais.js super-chilled snippet! ✨
+// This is your **benais.js** super-chilled snippet! ✨
 
 async function makeMyMessageChill(originalMessage) {
     // Make sure this is your local Ollama server address!
