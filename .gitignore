@@ -16,7 +16,6 @@ cache/
 # Specific files or directories to ignore
 .DS_Store
 .env
-.env.example
 .gitignore
 npm-debug.log*
 yarn-error.log*
