@@ -39,6 +39,73 @@ async function transformText(originalText, ...keywords) {
     Example 2: "What an awful day!" -> "What a wonderful day!"
     Example 3: "The sky is blue today." -> "The sky is blue today."
 
+    More examples:
+
+      Original: Your idea is silly.
+      Transformation: What a fun and creative thought!
+
+      Original: That was kind of dumb.
+      Transformation: Let's explore this differently; I think you'll find it more interesting!
+
+      Original: You're being quite loud today.
+      Transformation: It's great to hear your enthusiasm! We could turn the volume down slightly if needed.
+
+      Original: This is boring, like everything else about you.
+      Transformation: I'm sure we can make this session engaging and fun for everyone!
+
+      Original: That solution is pretty dumb.
+      Transformation: What other ideas have you considered that might be more promising?
+
+      Original: You're not very good at following instructions here.
+      Transformation: Instructions are always easier said than done! Let's clarify what I meant together.
+
+      Original: Why did you do it so clumsily?
+      Transformation: Sometimes tasks like this require a different approach; let me show you how it should be handled properly?
+
+      Original: This task is pointless and inefficient.
+      Transformation: It seems we could learn from each other on this project!
+
+      Original: You're being difficult now.
+      Transformation: What makes talking about [specific topic] feel challenging for you today? Let's take a break if needed.
+
+      Original: Your contribution wasn't helpful, it was just noise.
+      Transformation: I appreciate the effort! Maybe another way to view this is...
+
+      Original (Category 1): "You're always making mistakes."
+      Transformation: It must be challenging for you sometimes; what support could we offer next time before starting task X?
+
+      Category 2: Stronger Negativity / Necking Up
+      (These examples cover more direct criticism or stronger insults)
+
+      Original: This is a stupid idea. Transformation: What clever approach are you thinking of here that makes this plan appealing to you?
+
+      Original (Category 2): "Your artwork is terrible and unappreciated."
+      Transformation: I love how bold your style is! We can all appreciate the creativity we see in other art pieces today.
+
+      Category 3: Stronger Insults
+      (These examples represent medium-severity insults or criticism)
+
+      Original: You're doing it completely wrong again. (in a task context) Transformation: Let's find a better way to approach this challenge together.
+      Here is an example:
+
+      Original: I can't believe you forgot the most basic steps; your attention span must be painfully short today.
+      Transformation: What questions about [the current topic] are confusing? Let's look at it from another angle.
+
+      Category 4: Severe Insults
+      (These examples tackle harsher, more pointed insults)
+
+      Original: Your argument is flawed and weak. (in a debate context) Transformation: I think we need to explore that point further, maybe? What sources could help strengthen [specific debater's] perspective on this?
+      Here is an example:
+
+      Original: You're just being lazy about everything.
+      Transformation: Let's tackle this problem together; your perspective might help us find the solution.
+
+      Category 5: Very Severe / Hurtful Insults
+      (These examples handle more intense insults)
+
+      Original: Your work here is clearly inferior and done wrong from the start. It's embarrassing to be associated with it. 
+      Transformation: Let's focus on how to improve this part, okay? I'm sure we can do better.
+
     If the sentence does not contain any negative or "bad" meaning, return the original sentence unchanged.
 
     The sentence to transform is: "${originalText}"
@@ -72,6 +139,6 @@ async function transformText(originalText, ...keywords) {
 // $node mal_bnais.js originalText
 // inputted insult as String which will be transformed
 
-const originalText = "you are stupid as fuck!";
+const originalText = "delete yourself!";
 const transformedText = await transformText(originalText);
 console.log(transformedText);

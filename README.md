@@ -1,0 +1,1 @@
+Got a text that's a bit too spicy? Meet benais.js, a tiny JavaScript function designed to take your rude, grumpy, or just plain mean text and magically transform it into something a lot nicer. It's the ultimate politeness patch for all your digital communications.
