@@ -74,7 +74,7 @@ Transformed sentence:`; // trailing colon – the model will output only the new
 }
 
 // ---------- API endpoint ----------
-app.post("/transform", async (req, res) => {
+app.post("/chill", async (req, res) => {
   try {
     const { text } = req.body;
     if (!text || typeof text !== "string")
