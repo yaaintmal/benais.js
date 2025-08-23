@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>benais.js – The Chill‑Filter for Your Messages</title>
+  <style>
+    body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:2rem;background:#f5f5f5}
+    h1,h2{color:#333}
+    pre{background:#272822;color:#f8f8f2;overflow:auto;padding:.75rem;border-radius:.25rem;}
+    code{font-family:monospace}
+    .section{margin-bottom:3rem;background:white;padding:1.5rem;border-radius:.5rem;box-shadow:0 2px 4px rgba(0,0,0,.1);}
+    a{color:#0066cc;text-decoration:none;}
+    a:hover{text-decoration:underline;}
+    ul{list-style-position:inside;}
+  </style>
+</head>
+<body>
+
+<div class="section">
+  <h1>benais.js – Your Message’s Chill Filter (Beta)</h1>
+  <p><strong>benais.js</strong> is a tiny JavaScript snippet that turns grumpy or negative messages into polite, friendly ones.  
+  It runs locally on your machine and uses an <a href="https://ollama.ai/" target="_blank">Ollama</a> LLM (e.g., gemma3) so all text stays private.</p>
+</div>
+
+<div class="section">
+  <h2>Installation</h2>
+  <ol>
+    <li><strong>Set up a local LLM:</strong>  
+      <ul>
+        <li>Download and install Ollama from <a href="https://ollama.ai/" target="_blank">https://ollama.ai/</a>.</li>
+        <li>Pull the model you want to use, e.g. `gemma3`:  
+          <pre><code>ollama pull gemma3</code></pre>
+        </li>
+      </ul>
+    </li>
+
+    <li><strong>Create your .env file:</strong>  
+      <p>Copy <code>.env.example</code> to <code>.env</code> and set the following variables (replace with your own values):</p>
+      <pre><code># .env
+OLLAMA_URL=http://127.0.0.1:11434/api/chat
+LLM_MODEL=gemma3</code></pre>
+    </li>
+
+    <li><strong>Add benais.js to your project:</strong>  
+      <p>Save the following script as <code>benais.js</code> in your project root (or wherever you prefer).</p>
+      <pre><code>// benais.js
+import dotenv from "dotenv";
+dotenv.config();
+
+const ollamaUrl = process.env.OLLAMA_URL || "http://127.0.0.1:11434/api/chat";
+const llmModel  = process.env.LLM_MODEL   || "gemma3";
+
+async function makeMyMessageChill(originalMessage) {
+  const prompt = `You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning. If it does, rewrite the sentence to have a positive, opposite meaning. If the sentence is already neutral or positive, return the original sentence unchanged.
+
+Example 1: "This is a terrible situation." -> "This is a wonderful situation."
+Example 2: "What an awful day!" -> "What a wonderful day!"
+Example 3: "The sky is blue today." -> "The sky is blue today."
+
+If the sentence does not contain any negative or "bad" meaning, return the original sentence unchanged.
+
+The sentence to transform is: "${originalMessage}"
+
+Transformed sentence:`;
+
+  const response = await fetch(ollamaUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: llmModel,
+      messages: [{ role: "user", content: prompt }],
+      stream: false
+    })
+  });
+
+  const data = await response.json();
+  return data.response.trim();
+}
+
+// CLI usage – node benais.js "<your message>"
+if (require.main === module) {
+  const originalText = process.argv[2];
+  if (!originalText) {
+    console.error("Usage: node benais.js \"<message>\"");
+    process.exit(1);
+  }
+  makeMyMessageChill(originalText)
+    .then(console.log)
+    .catch(err => { console.error(err); process.exit(1); });
+}
+</code></pre>
+    </li>
+  </ol>
+</div>
+
+<div class="section">
+  <h2>Usage</h2>
+  <p>Once you have an LLM running and the script installed, you can use it in two ways:</p>
+
+  <h3>Command‑Line (CLI)</h3>
+  <pre><code>node benais.js "Your grumpy message here!"</code></pre>
+  <p>This prints the polished version to stdout.</p>
+
+  <h3>In Your Own JavaScript Code</h3>
+  <pre><code>import { makeMyMessageChill } from "./benais.js";
+
+const original = "I hate how slow this is.";
+makeMyMessageChill(original).then(chilled => console.log(chilled));
+// → "I appreciate the improvements being made." (example)</code></pre>
+</div>
+
+<div class="section">
+  <h2>Further Features &amp; Roadmap</h2>
+  <ul>
+    <li><strong>Webpage Comment Filter:</strong> Plug the snippet into a website to auto‑filter public comments.</li>
+    <li><strong>Child‑Safe Mode:</strong> Add an opt‑in safety layer that flags or removes potentially inappropriate content for younger audiences.</li>
+    <li><strong>Custom Prompt Support:</strong> Allow users to supply their own prompts to tweak the tone of transformation.</li>
+    <li><strong>Batch Processing:</strong> Process an array of messages in one call for efficiency.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <h2>Contributing &amp; Feedback</h2>
+  <p>This project is still in Beta. If you have ideas, bug reports, or pull requests, feel free to open an issue on GitHub or fork the repo and submit a PR.</p>
+</div>
+
+<div class="section">
+  <h2>License</h2>
+  <p>The code is released under the MIT License – do what you want with it!</p>
+</div>
+
+<footer style="text-align:center;color:#777;">
+  <small>&copy; 2025 benais.js – The chill filter for your messages.</small>
+</footer>
+</body>
+</html>
