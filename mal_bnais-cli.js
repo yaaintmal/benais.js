@@ -1,0 +1,72 @@
+// mal_benais-cli.js  – CLI that outputs ONLY the transformed text
+import fetch from "node-fetch";
+import dotenv from "dotenv";
+
+dotenv.config(); // optional – loads OLLAMA_URL/LLM_MODEL if you have a .env
+
+const [, , original] = process.argv;
+
+if (!original) {
+  console.error(
+    '❌ No input supplied.\nUsage: node mal_benais-cli.js "<sentence>"'
+  );
+  process.exit(1);
+}
+
+/* ------------------------------------------------------------------
+   Configuration – change only if your Ollama server is elsewhere
+------------------------------------------------------------------- */
+const OLLAMA_URL = process.env.OLLAMA_URL || "http://127.0.0.1:11434/api/chat";
+const LLM_MODEL = process.env.LLM_MODEL || "gemma3";
+
+/* ------------------------------------------------------------------
+   Prompt that mirrors the one used in mal_bnais-svr.js
+------------------------------------------------------------------- */
+const promptFor = (msg) => `
+You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning.
+If it does, rewrite the sentence to have a positive, opposite meaning.
+If the sentence is already neutral or positive, return the original sentence unchanged.
+
+Example 1: "This is a terrible situation." -> "This is a wonderful situation."
+Example 2: "What an awful day!" -> "What a wonderful day!"
+Example 3: "The sky is blue today." -> "The sky is blue today."
+
+If the sentence does not contain any negative or "bad" meaning, return the original sentence unchanged.
+
+The sentence to transform is: "${msg}"
+
+Transformed sentence:`;
+
+/* ------------------------------------------------------------------
+   Call Ollama and pull out the answer
+------------------------------------------------------------------- */
+async function chill(msg) {
+  const body = {
+    model: LLM_MODEL,
+    messages: [{ role: "user", content: promptFor(msg) }],
+    stream: false,
+  };
+
+  const res = await fetch(OLLAMA_URL, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+
+  if (!res.ok)
+    throw new Error(`Ollama error ${res.status}: ${await res.text()}`);
+
+  const data = await res.json();
+  // The model returns the transformed sentence in data.message.content
+  return data.message?.content?.trim() ?? "";
+}
+
+/* ------------------------------------------------------------------
+   Run and print the result
+------------------------------------------------------------------- */
+chill(original)
+  .then((text) => console.log(text))
+  .catch((err) => {
+    console.error("❌", err.message);
+    process.exit(1);
+  });
