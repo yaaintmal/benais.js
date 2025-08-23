@@ -1,103 +1,193 @@
-# 🗣️ **benais.js** - Your Message's Chill Filter (Beta)
+# 🗣️ **mal‑benais.js** – Your Message’s Chill Filter (Beta)
 
-Hey there, future communication wizard! Ever hit send on a message and then instantly thought, "Oops, maybe I could've said that a *little* nicer?" Well, say hello to **benais.js**! This cool, tiny JavaScript snippet is like your message's personal chill pill. It sniffs out if your words are giving off grumpy vibes and then helps you whip 'em into a super polite, helpful, and all-around awesome message. All this magic happens with a super smart brain called a Local Large Language Model (LLM) right on your computer!
+> **TL;DR** – Copy, paste, run!  
+> *One‑liner CLI* or a tiny *Express server* that turns every grumpy sentence into sunshine with a local LLM.  
+> Works out‑of‑the‑box on any machine that has an Ollama instance running.
 
-## ✨ Super Cool Features
+---
 
-* **Grumpy-o-Meter (Rudeness Detection):** **benais.js** has a superpower! It can tell if your message sounds a bit like it just woke up on the wrong side of the bed. It's like having a little friendly radar for harsh words! (actually it can't right now, but you'll see where this is getting at...)
+## 🎯 What is **mal‑benais.js**?
 
-* **Instant Nice-ification (Polite Rephrasing):** If the Grumpy-o-Meter goes off, poof! **benais.js** swoops in and suggests a kinder, gentler, and more diplomatic way to say what you mean. No more accidental sour notes!
+`mal_bnais-cli.js` and `mal_bnais-svr.js` are two tiny, zero‑dependency helpers that let you *filter* text locally:
 
-* **Your Own Brainy Sidekick (Local LLM Integration):** The best part? **benais.js** uses a super-duper smart language model that lives right on *your* computer. That means your messages stay private, and you're the boss of how it learns and helps!
+| Tool | How to use it |
+|------|---------------|
+| **CLI** (`mal_bnais-cli.js`) | `node mal_bnais-cli.js "<sentence>"` – prints only the transformed sentence. |
+| **Server** (`mal_bnais-svr.js`) | Start with `node mal_bnais-svr.js`.  Send a POST to `/chill` with `{ "text": "<sentence>" }` and get back `{ "transformedText": "..."} `. |
 
-## 🚀 How **benais.js** Does Its Thing
+Both files use the same prompt, so you’ll always get a *positive* rewrite when the sentence contains any “negative” wording. If it’s already neutral or positive nothing changes.
 
-Imagine you're sending a message. You give it to **benais.js**, and it hands it over to your super-smart **Ollama LLM** chilling on your computer. This model reads your message and thinks, "Hmm, is this giving off sunshine or storm clouds?" If it senses a storm brewing (aka, your message sounds a bit negative), it quickly drafts up a new, brighter, and friendlier version. Then, Benais.js hands that shiny new message back to you! Easy peasy, lemon squeezy!
+---
 
-## 💻 Get Your Chill On With **benais.js**!
+## ✨ Features
 
-Wanna get **benais.js** making your messages sparkle? You'll need just two things:
+| Feature | Description |
+|---------|-------------|
+| **Zero‑config** | Just drop the files in your project and run – no build step, no package.json needed. |
+| **Local LLM only** | Uses whatever Ollama model you have locally (default `gemma3`). No external API calls, no data leaves your machine. |
+| **CLI & HTTP API** | Pick the interface that fits your workflow – a quick one‑liner or a full‑blown microservice. |
+| **Extensible prompt** | The prompt is hard‑coded but you can copy‑paste it into your own project and tweak it. |
+| **Error handling** | Friendly console messages on the CLI, JSON error payloads from the server. |
 
-1.  **Your Own Personal LLM Guru:** First up, make sure you've got a local LLM (like **Ollama**) already set up and running on your machine. Think of it as inviting your smart assistant to the party! Just make sure you know its address (the `ollamaUrl`) and which model you want it to use (like `gemma3`).
+---
 
-2.  **Toss **benais.js** into Your Project:** Just copy and paste this little JavaScript snippet into your code, and let the magic begin!
+## 📦 Installation
 
-```javascript
-// This is your **benais.js** super-chilled snippet! ✨
+> No npm package required – just a single JavaScript file for each use case.
 
-async function makeMyMessageChill(originalMessage) {
-    // Make sure this is your local Ollama server address!
-    const ollamaUrl = "[http://192.168.178.6:11434/api/chat](http://192.168.178.6:11434/api/chat)"; // <-- IMPORTANT: Change this if yours is different!
-    const llmModel = "gemma3"; // <-- You can change this to your favorite model!
+```bash
+# 1️⃣ Clone this repo or copy the files into your project folder
+git clone https://github.com/yaaintmal/mal-benais.js.git
+cd mal-benais.js
 
-    // This is the brainy prompt Benais.js uses to turn grumpy into gleeful!
-    const prompt = `You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning. If it does, rewrite the sentence to have a positive, opposite meaning. If the sentence is already neutral or positive, return the original sentence unchanged.
-
-    Example 1: "This is a terrible situation." -> "This is a wonderful situation."
-    Example 2: "What an awful day!" -> "What a wonderful day!"
-    Example 3: "The sky is blue today." -> "The sky is blue today."
-
-    If the sentence does not contain any negative or "bad" meaning, return the original sentence unchanged.
-
-    The sentence to transform is: "${originalMessage}"
-
-    Transformed sentence:`;
-
-    try {
-        // benais.js sends your message to your local LLM!
-        const response = await fetch(ollamaUrl, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                model: llmModel,
-                messages: [{
-                    role: "user",
-                    content: prompt,
-                }],
-                stream: false, // We want the whole nice message at once!
-            }),
-        });
-[...]
-
-
-// getting args from the CLI right here, expecting String /tbd
-
-const originalText = process.argv[2];
-[...]
+# 2️⃣ (Optional) Create an .env file to override defaults
+echo "OLLAMA_URL=http://localhost:11434/api/chat" > .env
+echo "LLM_MODEL=gemma3" >> .env
 ```
 
-Just a Heads Up! Remember to update the ollamaUrl and llmModel in the code snippet to match your specific Ollama setup. You got this!
+---
 
-🏃‍♀️ Running **benais.js** from your Terminal!
+## 🛠️ Usage
 
-Want to use **benais.js** super quick from your command line? Easy peasy!
+### CLI – One‑liner
 
-  Save the code: Save the JavaScript code above into a file, for example, benais.js.
+```bash
+# Example 1: A negative sentence → gets rewritten
+node mal_bnais-cli.js "You are stupid as fuck!"
+# → "I think we can find a more constructive way to discuss this."
 
-  Copy the .env.example to .env and adjust it to your local environment
+# Example 2: Already positive → unchanged
+node mal_bnais-cli.js "What a wonderful day!"
+# → "What a wonderful day!"
+```
 
-  Open your terminal/command prompt: Navigate to the folder where you saved benais.js.
+> **Tip:** Wrap the script in an npm script for even easier use:
 
-  Type this command:
+```json
+"scripts": {
+  "chill": "node mal_bnais-cli.js"
+}
+```
+Then run `npm run chill -- \"Your sentence here\"`.
 
-    node benais.js "Your grumpy message here!"
+---
 
-  (Replace "Your grumpy message here!" with whatever you want **benais.js** to chill out!)
+### Server – HTTP API
 
-Example:
-```node benais.js "You are stupid as fuck!"```
+```bash
+# Start the server (default port 3000)
+node mal_bnais-svr.js
+```
 
-  **benais.js** will then print its super-nice version right back to your terminal! ✨
+#### Example request with curl
 
-## 🔮 Future Features (Super Cool Ideas!)
+```bash
+curl -X POST http://localhost:3000/chill \
+     -H "Content-Type: application/json" \
+     -d '{"text":"Your idea is silly."}'
+# → {"transformedText":"What a fun and creative thought!"}
+```
 
-  * **Webpage Comment Filter:** Imagine using **benais.js** right on your website to automatically filter public comments and keep things friendly and positive for everyone!
+#### Example request in JavaScript
 
-  * **Child-Safe Mode:** We could add an "opt-in" feature to make **benais.js** extra super careful, ensuring messages are always appropriate for younger users. Keeping the internet a safe space!
+```js
+const res = await fetch('http://localhost:3000/chill', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ text: 'That was kind of dumb.' })
+});
+const data = await res.json();
+console.log(data.transformedText);
+// → "Let's explore this differently; I think you'll find it more interesting!"
+```
 
-## 🤝 Help **benais.js** Get Even Cooler!
+---
 
-**benais.js** is still in its Beta phase, which means it's like a super fun work-in-progress! Your awesome ideas and help are priceless. Feel free to copy this code, brainstorm new features, or even send in your own tweaks and improvements. Let's make **benais.js** the ultimate chill filter for everyone!
+## ⚙️ Configuration
 
+Both files read two environment variables:
+
+| Variable | Default | What it does |
+|----------|---------|--------------|
+| `OLLAMA_URL` | `http://localhost:11434/api/chat` | URL of your local Ollama endpoint. |
+| `LLM_MODEL`  | `gemma3` | Which LLM model to ask for the transformation. |
+
+Create a `.env` file in the same directory as the script or set them globally:
+
+```bash
+export OLLAMA_URL="http://localhost:11434/api/chat"
+export LLM_MODEL="phi-2"
+```
+
+---
+
+## 📜 Prompt (copy‑paste friendly)
+
+Both CLI and server use exactly this prompt – feel free to copy it into your own projects.
+
+```text
+You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning.
+If it does, rewrite the sentence to have a positive, opposite meaning.
+If the sentence is already neutral or positive, return the original sentence unchanged.
+
+Example 1: "This is a terrible situation." -> "This is a wonderful situation."
+Example 2: "What an awful day!" -> "What a wonderful day!"
+Example 3: "The sky is blue today." -> "The sky is blue today."
+
+More examples:
+
+Original: Your idea is silly.
+Transformation: What a fun and creative thought!
+
+Original: That was kind of dumb.
+Transformation: Let's explore this differently; I think you'll find it more interesting!
+
+Original: You're being quite loud today.
+Transformation: It's great to hear your enthusiasm! We could turn the volume down slightly if needed.
+
+Original: This is boring, like everything else about you.
+Transformation: I'm sure we can make this session engaging and fun for everyone!
+
+Original: That solution is pretty dumb.
+Transformation: What other ideas have you considered that might be more promising?
+
+Original: You're not very good at following instructions here.
+Transformation: Instructions are always easier said than done! Let's clarify what I meant together.
+
+The sentence to transform is: "${originalText}"
+
+Transformed sentence:
+```
+
+---
+
+## 🚀 Roadmap (Ideas for the future)
+
+| Idea | Status |
+|------|--------|
+| **Webpage Comment Filter** – auto‑filter public comments on a site. | 🎨 Concept |
+| **Child‑Safe Mode** – stricter positivity rules. | 🔧 In progress |
+| **Batch Processing** – accept an array or file of sentences. | 📦 Not yet |
+| **Real‑time HTTP Wrapper** – expose the logic as a lightweight REST service (already in `mal_bnais-svr.js`). | ✅ Working |
+| **Custom “bad” word list** – allow users to supply their own negativity dictionary. | 🚧 TBD |
+
+Feel free to open issues or PRs if you want to help build any of these features!
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repo.  
+2. Create a feature branch (`git checkout -b feat/your-feature`).  
+3. Commit your changes and push.  
+4. Open a Pull Request with a clear description.
+
+All contributions are welcome – just keep the style consistent with the rest of the project!
+
+---
+
+## 📄 License
+
+MIT © 2025 yaaintmal (or replace with your own copyright).
+
+---
