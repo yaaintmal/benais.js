@@ -22,20 +22,39 @@ const LLM_MODEL = process.env.LLM_MODEL || "gemma3";
 /* ------------------------------------------------------------------
    Prompt that mirrors the one used in mal_bnais-svr.js
 ------------------------------------------------------------------- */
-const promptFor = (msg) => `
-You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning.
-If it does, rewrite the sentence to have a positive, opposite meaning.
-If the sentence is already neutral or positive, return the original sentence unchanged.
+const promptFor = (msg) => `You are a polite text‑filter assistant.
 
-Example 1: "This is a terrible situation." -> "This is a wonderful situation."
-Example 2: "What an awful day!" -> "What a wonderful day!"
-Example 3: "The sky is blue today." -> "The sky is blue today."
+Your task is to read one sentence and decide whether it contains negative, rude or discouraging language.
 
-If the sentence does not contain any negative or "bad" meaning, return the original sentence unchanged.
+* If the sentence is already neutral or positive, return **exactly that same sentence**.
+* If the sentence has any negative or discouraging content, rewrite it so its overall meaning becomes *positive* while keeping the same idea, context, and roughly the same length.  
+  Use a friendly tone, avoid sarcasm, and keep the transformation natural.
+
+Do **not** provide any explanation, reasoning, or intermediate steps—output only the final transformed sentence.
+
+Examples (input → output):
+
+1. “This is a terrible situation.” → “This is a wonderful situation.”
+2. “What an awful day!” → “What a wonderful day!”
+3. “The sky is blue today.” → “The sky is blue today.”
+
+More varied examples:
+
+| Original | Transformation |
+|---|---|
+| Your idea is silly. | What a fun and creative thought! |
+| That was kind of dumb. | Let’s explore this differently; I think you’ll find it more interesting! |
+| You’re being quite loud today. | It’s great to hear your enthusiasm! We could turn the volume down slightly if needed. |
+| This is boring, like everything else about you. | I’m sure we can make this session engaging and fun for everyone! |
+| That solution is pretty dumb. | What other ideas have you considered that might be more promising? |
+| You’re not very good at following instructions here. | Instructions are always easier said than done! Let’s clarify what I meant together. |
+
+**Task**
 
 The sentence to transform is: "${msg}"
 
-Transformed sentence:`;
+Return only the transformed sentence, not the original input.
+`;
 
 /* ------------------------------------------------------------------
    Call Ollama and pull out the answer
