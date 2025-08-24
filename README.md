@@ -116,7 +116,7 @@ Create a `.env` file in the same directory as the script or set them globally:
 
 ```bash
 export OLLAMA_URL="http://localhost:11434/api/chat"
-export LLM_MODEL="phi-2"
+export LLM_MODEL="gemma3"
 ```
 
 ---
