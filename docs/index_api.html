@@ -1,78 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>mal_bnais‑svr.js – Chill‑Filter API Service</title>
-<style>
-  body{font-family:Arial,Helvetica,sans-serif;margin:0;padding:2rem;background:#f4f6f9}
-  h1,h2{color:#222}
-  pre{background:#272822;color:#f8f8f2;overflow:auto;padding:.75rem;border-radius:.25rem;}
-  code{font-family:monospace}
-  .section{margin-bottom:3rem;background:white;padding:1.5rem;border-radius:.5rem;box-shadow:0 2px 4px rgba(0,0,0,.1);}
-  a{color:#0066cc;text-decoration:none;}
-  a:hover{text-decoration:underline;}
-</style>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <title>benais.js / mal_bnais-svr.js – Chill‑Filter API Service</title>
+    <style>
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+        margin: 0;
+        padding: 2rem;
+        background: #f4f6f9;
+      }
+      h1,
+      h2 {
+        color: #222;
+      }
+      pre {
+        background: #272822;
+        color: #f8f8f2;
+        overflow: auto;
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+      }
+      code {
+        font-family: monospace;
+      }
+      .section {
+        margin-bottom: 3rem;
+        background: white;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      a {
+        color: #0066cc;
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="section">
+      <h1>mal_bnais‑svr.js – The Chill‑Filter API Service</h1>
+      <p>
+        <strong>mal_bnais‑svr.js</strong> is an Express/Node.js server that
+        exposes a simple REST endpoint (`POST /chill`) to transform any
+        user‑supplied text from negative to positive. It uses the same local
+        Ollama LLM that powers <code>benais.js</code>, so your data never leaves
+        your machine.
+      </p>
+    </div>
 
-<div class="section">
-  <h1>mal_bnais‑svr.js – The Chill‑Filter API Service</h1>
-  <p><strong>mal_bnais‑svr.js</strong> is an Express/Node.js server that exposes a simple REST endpoint
-  (`POST /chill`) to transform any user‑supplied text from negative to positive.  
-  It uses the same local Ollama LLM that powers <code>benais.js</code>, so your data never leaves your machine.</p>
-</div>
-
-<div class="section">
-  <h2>Installation &amp; Setup</h2>
-  <ol>
-    <li><strong>Prerequisites</strong>: Node 18+ and a running Ollama instance (e.g., `gemma3`).</li>
-    <li>Clone the repo or copy the file into your project.</li>
-    <li>Create a `.env` file from `.env.example`:  
-      <pre><code># .env
+    <div class="section">
+      <h2>Installation &amp; Setup</h2>
+      <ol>
+        <li>
+          <strong>Prerequisites</strong>: Node 18+ and a running Ollama instance
+          (e.g., `gemma3`).
+        </li>
+        <li>Clone the repo or copy the file into your project.</li>
+        <li>
+          Create a `.env` file from `.env.example`:
+          <pre><code># .env
 PORT=3000
 OLLAMA_URL=http://127.0.0.1:11434/api/chat
 LLM_MODEL=gemma3</code></pre>
-    </li>
-    <li>Install dependencies and start the server:  
-      <pre><code>npm install express dotenv node-fetch
+        </li>
+        <li>
+          Install dependencies and start the server:
+          <pre><code>npm install express dotenv node-fetch
 node mal_bnais-svr.js</code></pre>
-    </li>
-  </ol>
-</div>
+        </li>
+      </ol>
+    </div>
 
-<div class="section">
-  <h2>API Reference</h2>
-  <h3>POST /chill</h3>
-  <p>Transforms a single sentence from negative to positive.</p>
+    <div class="section">
+      <h2>API Reference</h2>
+      <h3>POST /chill</h3>
+      <p>Transforms a single sentence from negative to positive.</p>
 
-  <h4>Request Body (JSON)</h4>
-  <pre><code>{
+      <h4>Request Body (JSON)</h4>
+      <pre><code>{
   "text": "I hate how slow this is."
 }</code></pre>
 
-  <h4>Response (JSON)</h4>
-  <pre><code>{
+      <h4>Response (JSON)</h4>
+      <pre><code>{
   "original": "I hate how slow this is.",
   "chilled": "I appreciate the improvements being made."
 }</code></pre>
 
-  <h4>Status Codes</h4>
-  <ul>
-    <li><strong>200 OK</strong> – Success.</li>
-    <li><strong>400 Bad Request</strong> – Missing or invalid `text` field.</li>
-    <li><strong>500 Internal Server Error</strong> – LLM request failed.</li>
-  </ul>
+      <h4>Status Codes</h4>
+      <ul>
+        <li><strong>200 OK</strong> – Success.</li>
+        <li>
+          <strong>400 Bad Request</strong> – Missing or invalid `text` field.
+        </li>
+        <li>
+          <strong>500 Internal Server Error</strong> – LLM request failed.
+        </li>
+      </ul>
 
-  <h4>Example with curl</h4>
-  <pre><code>curl -X POST http://localhost:3000/chill \
+      <h4>Example with curl</h4>
+      <pre><code>curl -X POST http://localhost:3000/chill \
      -H "Content-Type: application/json" \
      -d '{"text":"You are stupid as fuck!"}'</code></pre>
-</div>
+    </div>
 
-<div class="section">
-  <h2>How It Works (Behind the Scenes)</h2>
-  <p>The server forwards the user’s sentence to Ollama with a prompt identical to that used in <code>benais.js</code>:</p>
-  <pre><code>You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning.
+    <div class="section">
+      <h2>How It Works (Behind the Scenes)</h2>
+      <p>
+        The server forwards the user’s sentence to Ollama with a prompt
+        identical to that used in <code>benais.js</code>:
+      </p>
+      <pre><code>You are a helpful text filter. Analyze the following sentence and determine if it contains any negative or "bad" meaning.
 If it does, rewrite the sentence to have a positive, opposite meaning.
 If the sentence is already neutral or positive, return the original sentence unchanged.
 
@@ -82,26 +124,43 @@ Example 1: "This is a terrible situation." -> "This is a wonderful situation."
 The sentence to transform is: "${originalMessage}"
 
 Transformed sentence:</code></pre>
-  <p>The LLM returns the transformed text, which the API then packages in JSON and sends back.</p>
-</div>
+      <p>
+        The LLM returns the transformed text, which the API then packages in
+        JSON and sends back.
+      </p>
+    </div>
 
-<div class="section">
-  <h2>Future Enhancements</h2>
-  <ul>
-    <li><strong>Batch Endpoint</strong>: `POST /chill/batch` to process an array of sentences at once.</li>
-    <li><strong>Rate‑Limiting & Auth</strong>: Protect the API with JWT or API keys.</li>
-    <li><strong>Websocket Streaming</strong>: Stream partial results for long messages.</li>
-  </ul>
-</div>
+    <div class="section">
+      <h2>Future Enhancements</h2>
+      <ul>
+        <li>
+          <strong>Batch Endpoint</strong>: `POST /chill/batch` to process an
+          array of sentences at once.
+        </li>
+        <li>
+          <strong>Rate‑Limiting & Auth</strong>: Protect the API with JWT or API
+          keys.
+        </li>
+        <li>
+          <strong>Websocket Streaming</strong>: Stream partial results for long
+          messages.
+        </li>
+      </ul>
+    </div>
 
-<div class="section">
-  <h2>Contributing &amp; Feedback</h2>
-  <p>This project is in Beta. Pull requests, issue reports and ideas are welcome!  
-  Fork the repo, tweak the prompt or add new features, then submit a PR.</p>
-</div>
+    <div class="section">
+      <h2>Contributing &amp; Feedback</h2>
+      <p>
+        This project is in Beta. Pull requests, issue reports and ideas are
+        welcome! Fork the repo, tweak the prompt or add new features, then
+        submit a PR.
+      </p>
+    </div>
 
-<footer style="text-align:center;color:#777;">
-  <small>&copy; 2025 mal_bnais‑svr.js – The Chill‑Filter API Service.</small>
-</footer>
-</body>
+    <footer style="text-align: center; color: #777">
+      <small
+        >&copy; 2025 mal_bnais‑svr.js – The Chill‑Filter API Service.</small
+      >
+    </footer>
+  </body>
 </html>
