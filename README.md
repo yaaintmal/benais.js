@@ -68,7 +68,7 @@ node mal_bnais-cli.js "What a wonderful day!"
   "chill": "node mal_bnais-cli.js"
 }
 ```
-Then run `npm run chill -- \"Your sentence here\"`.
+Then run `npm run chill -- \"Your sentence here\"`. // Edit: To be honest, this part is untested, but you get the idea I guess...
 
 ---
 
@@ -79,7 +79,7 @@ Then run `npm run chill -- \"Your sentence here\"`.
 node mal_bnais-svr.js
 ```
 
-#### Example request with curl
+#### Example request with curl (this part is tested again)
 
 ```bash
 curl -X POST http://localhost:3000/chill \
