@@ -1,4 +1,4 @@
-# 🗣️ **mal‑benais.js** – Your Message’s Chill Filter (Beta)
+# 🗣️ **mal‑bnais.js** – Your Message’s Chill Filter (Beta)
 
 > **TL;DR** – Copy, paste, run!  
 > *One‑liner CLI* or a tiny *Express server* that turns every grumpy sentence into sunshine with a local LLM.  
@@ -6,7 +6,7 @@
 
 ---
 
-## 🎯 What is **mal‑benais.js**?
+## 🎯 What is **mal‑bnais.js**?
 
 `mal_bnais-cli.js` and `mal_bnais-svr.js` are two tiny, zero‑dependency helpers that let you *filter* text locally:
 
@@ -188,6 +188,6 @@ All contributions are welcome – just keep the style consistent with the rest o
 
 ## 📄 License
 
-MIT © 2025 yaaintmal (or replace with your own copyright).
+MIT © 2025 yaaintmal.
 
 ---
